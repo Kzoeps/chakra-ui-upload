@@ -24,7 +24,7 @@ function Upload(props: UploadProps) {
     const { onClick, onFileRemove, multiple, showUploadList = true, accept = '', beforeUpload, children } = props
 
     const mapIds = (files: File[]): CuiFile[] => {
-        return files.map((file) => ({ ...file, id: idGenerator() }))
+        return files.map((file) => { (file as CuiFile).id = idGenerator(); return file }) as CuiFile[]
     }
 
     const handleFileSet = (files: File[]) => {
