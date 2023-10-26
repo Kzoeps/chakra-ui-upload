@@ -5,6 +5,7 @@ import FileIcon from './FileIcon';
 import TrashIcon from './TrashIcon';
 import attrAccept from './attr-accept';
 import './style/upload.css';
+import UploadList from './upload-list';
 
 export interface UploadProps {
     multiple?: boolean;
@@ -12,13 +13,14 @@ export interface UploadProps {
     onClick?: (e: MouseEvent<HTMLDivElement>) => void;
     beforeUpload: (file: File) => void;
     children: React.ReactNode;
+    showUploadList?: boolean
 }
 
 function Upload(props: UploadProps) {
     const [dragState, setDragState] = useState('')
     const [fileList, setFileList] = useState<File[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const { onClick, multiple, accept = '', beforeUpload, children } = props
+    const { onClick, multiple, showUploadList = true,  accept = '', beforeUpload, children } = props
 
     const onDrop = (e: DragEvent<HTMLDivElement>) => {
         let files = [...e.dataTransfer.files]
@@ -62,21 +64,9 @@ function Upload(props: UploadProps) {
     }
 
     const renderUploadList = () => {
-        return (
-            <List>
-                {fileList.map((file, index) => {
-                    return (
-                        <ListItem style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }} key={index}>
-                            <Flex  alignItems={'center'} >
-                                <ListIcon  color={'gray.500'} as={FileIcon} />
-                                <Text overflow={'hidden'} whiteSpace={'nowrap'} textOverflow={'ellipsis'} flex={1} flexBasis={'80%'} >{file.name}</Text>
-                                <IconButton aria-label='delete button' variant={'ghost'} icon={<Icon   color={'gray.500'} as={TrashIcon} />} />
-                            </Flex>
-                        </ListItem>
-                    )
-                })}
-            </List>
-        )
+        if (showUploadList) {
+            return <UploadList files={fileList}/>
+        }
     }
 
     return (
