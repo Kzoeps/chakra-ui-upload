@@ -1,9 +1,9 @@
-import {Text, Box, ChakraProvider, Flex, Input, List, ListIcon, ListItem, IconButton, Icon, } from '@chakra-ui/react';
+import { Box, ChakraProvider, Input } from '@chakra-ui/react';
 import classnames from 'classnames';
 import { ChangeEvent, DragEvent, MouseEvent, useRef, useState } from 'react';
-import FileIcon from './FileIcon';
-import TrashIcon from './TrashIcon';
 import attrAccept from './attr-accept';
+import idGenerator from './id';
+import { CuiFile, FileRemoveFunction } from './interface';
 import './style/upload.css';
 import UploadList from './upload-list';
 
@@ -14,22 +14,33 @@ export interface UploadProps {
     beforeUpload: (file: File) => void;
     children: React.ReactNode;
     showUploadList?: boolean
+    onFileRemove: FileRemoveFunction
 }
 
 function Upload(props: UploadProps) {
     const [dragState, setDragState] = useState('')
-    const [fileList, setFileList] = useState<File[]>([])
+    const [fileList, setFileList] = useState<CuiFile[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const { onClick, multiple, showUploadList = true,  accept = '', beforeUpload, children } = props
+    const { onClick, onFileRemove, multiple, showUploadList = true, accept = '', beforeUpload, children } = props
+
+    const mapIds = (files: File[]): CuiFile[] => {
+        return files.map((file) => ({ ...file, id: idGenerator() }))
+    }
+
+    const handleFileSet = (files: File[]) => {
+        const acceptedFiles = mapIds(files)
+        setFileList((ogFiles) => [...ogFiles, ...acceptedFiles])
+    }
 
     const onDrop = (e: DragEvent<HTMLDivElement>) => {
         let files = [...e.dataTransfer.files]
         files = files.filter(file => attrAccept(file, accept))
         if (!multiple) {
             files = files.slice(0, 1)
-            setFileList(files)
+            setFileList(mapIds(files))
+        } else {
+            handleFileSet(files)
         }
-        setFileList((fileList) => [...files, ...fileList])
         uploadFiles(files)
     }
 
@@ -59,20 +70,25 @@ function Upload(props: UploadProps) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
         const acceptedFiles = [...files].filter(file => attrAccept(file, accept))
-        setFileList((files) => [...files, ...acceptedFiles])
+        handleFileSet(acceptedFiles)
         uploadFiles(acceptedFiles)
+    }
+
+    const handleRemove: FileRemoveFunction = (file, e?): void => {
+        setFileList((fileList) => fileList.filter(item => item.id !== file.id))
+        onFileRemove(file, e)
     }
 
     const renderUploadList = () => {
         if (showUploadList) {
-            return <UploadList files={fileList}/>
+            return <UploadList onRemove={handleRemove} files={fileList} />
         }
     }
 
     return (
         <ChakraProvider>
             <>
-                <Box onClick={openFileDialog} className={classnames('dragger', { 'drag-over': dragState === 'dragover' })}  role='button' onDragOver={handleFileDrag} onDragLeave={handleFileDrag} onDrop={handleFileDrag}>
+                <Box onClick={openFileDialog} className={classnames('dragger', { 'drag-over': dragState === 'dragover' })} role='button' onDragOver={handleFileDrag} onDragLeave={handleFileDrag} onDrop={handleFileDrag}>
                     <Input onChange={handleChange} multiple={multiple} ref={fileInputRef} type='file' hidden />
                     {children}
                 </Box>
