@@ -1,0 +1,9 @@
+.dragger {
+    border: 1px dashed var(--chakra-colors-gray-500);
+}
+.dragger:hover {
+    border: 1px dashed var(--chakra-colors-blue-500);
+}
+.drag-over {
+    background: rgba(109, 109, 109, 0.181);
+}
