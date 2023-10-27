@@ -1,27 +1,18 @@
-import { Box, ChakraProvider, Input } from '@chakra-ui/react';
+import { Box, Input } from '@chakra-ui/react';
 import classnames from 'classnames';
 import { ChangeEvent, DragEvent, MouseEvent, useRef, useState } from 'react';
 import attrAccept from './attr-accept';
 import idGenerator from './id';
-import { CuiFile, FileRemoveFunction } from './interface';
+import { CuiFile, FileRemoveFunction, UploadProps } from './interface';
 import './style/upload.css';
 import UploadList from './upload-list';
 
-export interface UploadProps {
-    multiple?: boolean;
-    accept?: string;
-    onClick?: (e: MouseEvent<HTMLDivElement>) => void;
-    beforeUpload: (file: File) => void;
-    children: React.ReactNode;
-    showUploadList?: boolean
-    onFileRemove: FileRemoveFunction
-}
 
-function Upload(props: UploadProps) {
+function Upload(props: UploadProps,) {
     const [dragState, setDragState] = useState('')
     const [fileList, setFileList] = useState<CuiFile[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const { onClick, onFileRemove, multiple, showUploadList = true, accept = '', beforeUpload, children } = props
+    const { style = {}, onClick, onFileRemove, onDrop: onFileDrop, multiple, showUploadList = true, accept = '', beforeUpload, children } = props
 
     const mapIds = (files: File[]): CuiFile[] => {
         return files.map((file) => { (file as CuiFile).id = idGenerator(); return file }) as CuiFile[]
@@ -41,6 +32,7 @@ function Upload(props: UploadProps) {
         } else {
             handleFileSet(files)
         }
+        onFileDrop?.(e)
         uploadFiles(files)
     }
 
@@ -76,7 +68,7 @@ function Upload(props: UploadProps) {
 
     const handleRemove: FileRemoveFunction = (file, e?): void => {
         setFileList((fileList) => fileList.filter(item => item.id !== file.id))
-        onFileRemove(file, e)
+        onFileRemove?.(file, e)
     }
 
     const renderUploadList = () => {
@@ -86,15 +78,13 @@ function Upload(props: UploadProps) {
     }
 
     return (
-        <ChakraProvider>
-            <>
-                <Box onClick={openFileDialog} className={classnames('dragger', { 'drag-over': dragState === 'dragover' })} role='button' onDragOver={handleFileDrag} onDragLeave={handleFileDrag} onDrop={handleFileDrag}>
-                    <Input onChange={handleChange} multiple={multiple} ref={fileInputRef} type='file' hidden />
-                    {children}
-                </Box>
-                {renderUploadList()}
-            </>
-        </ChakraProvider>
+        <>
+            <Box onClick={openFileDialog} className={classnames('dragger', { 'drag-over': dragState === 'dragover' })} style={{ ...style }}role='button' onDragOver={handleFileDrag} onDragLeave={handleFileDrag} onDrop={handleFileDrag}>
+                <Input onChange={handleChange} accept={accept} multiple={multiple} ref={fileInputRef} type='file' hidden />
+                {children}
+            </Box>
+            {renderUploadList()}
+        </>
     )
 }
 

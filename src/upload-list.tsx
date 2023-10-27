@@ -3,7 +3,7 @@ import FileIcon from "./FileIcon";
 import TrashIcon from "./TrashIcon";
 import { CuiFile, FileRemoveFunction } from "./interface";
 
-export default function UploadList({ files, onRemove }: { files: CuiFile[]; onRemove: FileRemoveFunction}) {
+export default function UploadList({ files, onRemove }: { files: CuiFile[]; onRemove: FileRemoveFunction }) {
     return (
         <>
             <List spacing={0}>

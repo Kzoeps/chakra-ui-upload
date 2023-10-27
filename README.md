@@ -9,7 +9,9 @@ Requirements:
 - [x] animations for hover
 - [x] set primary color on hover
 - [x] show uploaded file list
-- [ ] remove file once uploaded
+- [x] remove file once uploaded
+
+Tests
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
