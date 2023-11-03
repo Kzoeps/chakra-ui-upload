@@ -6,7 +6,7 @@ export interface CuiFile extends File {
 
 export interface UploadProps {
   multiple?: boolean;
-  accept?: string;
+  accept?: string | string[];
   onClick?: (e: MouseEvent<HTMLDivElement>) => void;
   onDrop?: (e: DragEvent<HTMLDivElement>) => void;
   beforeUpload: (file: File) => void;
