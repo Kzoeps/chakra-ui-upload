@@ -61,7 +61,7 @@ function Upload(props: UploadProps,) {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
-        const acceptedFiles = [...files].filter(file => attrAccept(file, accept))
+        const acceptedFiles = [...(files||[])].filter(file => attrAccept(file, accept))
         handleFileSet(acceptedFiles)
         uploadFiles(acceptedFiles)
     }
@@ -77,10 +77,17 @@ function Upload(props: UploadProps,) {
         }
     }
 
+    const formatAcceptedAttributes = (accept: string | string[]) => {
+        if (Array.isArray(accept)) {
+            return accept.join(',')
+        }
+        return accept
+    }
+
     return (
         <>
             <Box onClick={openFileDialog} className={classnames('dragger', { 'drag-over': dragState === 'dragover' })} style={{ ...style }}role='button' onDragOver={handleFileDrag} onDragLeave={handleFileDrag} onDrop={handleFileDrag}>
-                <Input data-testid="file-upload-input" onChange={handleChange} accept={accept} multiple={multiple} ref={fileInputRef} type='file' hidden={true} />
+                <Input data-testid="file-upload-input" onChange={handleChange} accept={formatAcceptedAttributes(accept)} multiple={multiple} ref={fileInputRef} type='file' hidden={true} />
                 {children}
             </Box>
             {renderUploadList()}
