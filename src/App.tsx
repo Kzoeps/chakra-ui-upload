@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import './style/upload.css';
-import Upload from './upload';
+import Upload from './lib/upload';
 
 function App() {
   return (
