@@ -49,7 +49,7 @@ function Upload(props: UploadProps,) {
         setDragState(type)
         if (type === 'drop') {
             console.log(e.dataTransfer.items)
-            onDrop?.(e)
+            onDrop(e)
         }
     }
 
@@ -80,7 +80,7 @@ function Upload(props: UploadProps,) {
     return (
         <>
             <Box onClick={openFileDialog} className={classnames('dragger', { 'drag-over': dragState === 'dragover' })} style={{ ...style }}role='button' onDragOver={handleFileDrag} onDragLeave={handleFileDrag} onDrop={handleFileDrag}>
-                <Input onChange={handleChange} accept={accept} multiple={multiple} ref={fileInputRef} type='file' hidden />
+                <Input data-testid="file-upload-input" onChange={handleChange} accept={accept} multiple={multiple} ref={fileInputRef} type='file' hidden={true} />
                 {children}
             </Box>
             {renderUploadList()}
