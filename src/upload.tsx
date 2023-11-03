@@ -8,7 +8,7 @@ import './style/upload.css';
 import UploadList from './upload-list';
 
 
-function Upload(props: UploadProps) {
+function Upload(props: UploadProps,) {
     const [dragState, setDragState] = useState('')
     const [fileList, setFileList] = useState<CuiFile[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -77,17 +77,10 @@ function Upload(props: UploadProps) {
         }
     }
 
-    const formatAcceptedAttributes = (accept: string | string[]): string => {
-        if (Array.isArray(accept)) {
-            return accept.join(',')
-        }
-        return accept
-    }
-
     return (
         <>
             <Box onClick={openFileDialog} className={classnames('dragger', { 'drag-over': dragState === 'dragover' })} style={{ ...style }}role='button' onDragOver={handleFileDrag} onDragLeave={handleFileDrag} onDrop={handleFileDrag}>
-                <Input data-testid="file-upload-input" onChange={handleChange} accept={formatAcceptedAttributes(accept)} multiple={multiple} ref={fileInputRef} type='file' hidden={true} />
+                <Input data-testid="file-upload-input" onChange={handleChange} accept={accept} multiple={multiple} ref={fileInputRef} type='file' hidden={true} />
                 {children}
             </Box>
             {renderUploadList()}
