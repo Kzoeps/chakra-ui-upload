@@ -109,11 +109,27 @@ test('should accept only allowed mime types', async () => {
     expect(input.files?.[0]).toBe(files[0])
 })
 
-test('should not render file list if show is false', async() => {
+test('can accept multiple mime types', async () => {
+    const user = userEvent.setup()
+    const files = [file, new File(['hello'], 'hello.txt', { type: 'text/plain' }), new File(['jpegImg'], 'hello2.jpg', { type: 'image/jpg' })]
+    render(
+        <>
+            <Upload beforeUpload={() => undefined} multiple={true} accept={['image/png', 'text/plain']}>Click to upload</Upload>
+        </>
+    )
+    const input: HTMLInputElement = screen.getByTestId('file-upload-input')
+    await user.upload(input, files)
+    expect(screen.queryAllByRole('listitem')).toHaveLength(2)
+    expect(input.files).toHaveLength(2)
+    expect(input.files?.[0]).toBe(files[0])
+    expect(input.files?.[1]).toBe(files[1])
+})
+
+test('should not render file list if show is false', async () => {
     const user = userEvent.setup()
     render(
         <>
-            <Upload beforeUpload={() => undefined} showUploadList={false}>Click to upload</Upload> 
+            <Upload beforeUpload={() => undefined} showUploadList={false}>Click to upload</Upload>
         </>
     )
     const input: HTMLInputElement = screen.getByTestId('file-upload-input')
