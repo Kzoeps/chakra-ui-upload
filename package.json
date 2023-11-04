@@ -1,5 +1,13 @@
 {
   "name": "chakra-ui-upload",
+  "description": "Chakra UI Upload component",
+  "keywords": ["chakra-ui", "chakra-ui upload", "react"],
+  "homepage": "https://github.com/Kzoeps/chakra-ui-upload",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "github:Kzoeps/chakra-ui-upload"
+  },
   "private": false,
   "version": "0.0.11",
   "type": "module",
