@@ -13,7 +13,7 @@ export default defineConfig({
       fileName: 'ChakraUpload'
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ['react', 'react-dom', '@chakra-ui/react', '@emotion/react', '@emotion/styled', 'framer-motion'],
       output: {
         globals: {
           react: 'React',

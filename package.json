@@ -3,6 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "./dist/ChakraUpload.js",
+  "module": "./dist/ChakraUpload.umd.cjs",
+  "exports": {
+    ".": {
+      "import": "./dist/ChakraUpload.js",
+      "require": "./dist/ChakraUpload.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite --port 3000",
     "build": "tsc && vite build",
@@ -15,13 +23,13 @@
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@testing-library/user-event": "^14.5.1",
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/user-event": "^14.5.1",
     "@testing-library/react": "^14.0.0",
     "@types/jest": "^29.5.7",
     "@types/react": "^18.2.15",
