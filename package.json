@@ -9,7 +9,7 @@
     "url": "github:Kzoeps/chakra-ui-upload"
   },
   "private": false,
-  "version": "0.0.12",
+  "version": "0.0.13",
   "type": "module",
   "main": "dist/ChakraUpload.js",
   "module": "dist/ChakraUpload.umd.cjs",
@@ -34,8 +34,8 @@
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.1",
     "@emotion/styled": "^11.1",
-    "react": "~18.1",
-    "react-dom": "~18.1",
+    "react": "^18.1",
+    "react-dom": "^18.1",
     "framer-motion": "^10.1"
   },
   "devDependencies": {
