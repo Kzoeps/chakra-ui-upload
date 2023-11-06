@@ -12,7 +12,7 @@ function Upload(props: UploadProps,) {
     const [dragState, setDragState] = useState('')
     const [fileList, setFileList] = useState<CuiFile[]>([])
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const { style = {}, onClick, onFileRemove, onFilesChange, onDrop: onFileDrop, multiple, showUploadList = true, accept = '', beforeUpload, children } = props
+    const { style = {}, onClick, onFileRemove, listenToFileList , onDrop: onFileDrop, multiple, showUploadList = true, accept = '', beforeUpload, children } = props
 
     const mapIds = (files: File[]): CuiFile[] => {
         return files.map((file) => { (file as CuiFile).id = idGenerator(); return file }) as CuiFile[]
@@ -20,7 +20,7 @@ function Upload(props: UploadProps,) {
 
     const handleFileSet = (files: File[]) => {
         const acceptedFiles = mapIds(files)
-        onFilesChange?.([...fileList, ...acceptedFiles])
+        listenToFileList?.([...fileList, ...acceptedFiles])
         setFileList((ogFiles) => [...ogFiles, ...acceptedFiles])
     }
 
