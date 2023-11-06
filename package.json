@@ -1,7 +1,11 @@
 {
   "name": "chakra-ui-upload",
   "description": "Chakra UI Upload component",
-  "keywords": ["chakra-ui", "chakra-ui upload", "react"],
+  "keywords": [
+    "chakra-ui",
+    "chakra-ui upload",
+    "react"
+  ],
   "homepage": "https://github.com/Kzoeps/chakra-ui-upload",
   "license": "MIT",
   "repository": {
@@ -34,14 +38,14 @@
     "@chakra-ui/react": "^2.8.1",
     "@emotion/react": "^11.1",
     "@emotion/styled": "^11.1",
+    "framer-motion": "^10.1",
     "react": "^18.1",
-    "react-dom": "^18.1",
-    "framer-motion": "^10.1"
+    "react-dom": "^18.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
-    "@testing-library/user-event": "^14.5.1",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.7",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
@@ -55,6 +59,7 @@
     "jsdom": "^22.1.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.6.3",
     "vitest": "^0.34.6"
   }
 }
