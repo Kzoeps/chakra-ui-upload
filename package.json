@@ -13,7 +13,7 @@
     "url": "github:Kzoeps/chakra-ui-upload"
   },
   "private": false,
-  "version": "0.0.17",
+  "version": "0.0.18",
   "type": "module",
   "types": "dist/index.d.ts",
   "main": "dist/ChakraUpload.js",
@@ -38,7 +38,7 @@
     "coverage": "vitest --coverage"
   },
   "peerDependencies": {
-    "@chakra-ui/react": "^2.8.1",
+    "@chakra-ui/react": "^2.7.1",
     "@emotion/react": "^11.1",
     "@emotion/styled": "^11.1",
     "framer-motion": "^10.1",
