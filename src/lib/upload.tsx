@@ -68,7 +68,9 @@ function Upload(props: UploadProps,) {
     }
 
     const handleRemove: FileRemoveFunction = (file, e?): void => {
-        setFileList((fileList) => fileList.filter(item => item.id !== file.id))
+        const filteredList = fileList.filter(item => item.id !== file.id)
+        setFileList(filteredList)
+        listenToFileList?.(filteredList)
         onFileRemove?.(file, e)
     }
 

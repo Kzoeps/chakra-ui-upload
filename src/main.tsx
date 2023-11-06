@@ -7,7 +7,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <>
       <ChakraProvider>
-        <Upload beforeUpload={(file: File) => console.log(file)} multiple={true} accept='image/*' >
+        <Upload listenToFileList={(files) => console.log(files, 'from file list')} beforeUpload={(file: File) => console.log(file, 'from before uplaod')} multiple={true} accept='image/*' >
           <h1>Drag and Drop Files here</h1>
         </Upload>
       </ChakraProvider>
