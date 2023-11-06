@@ -23,7 +23,7 @@ export default defineConfig({
       }
     }
   },
-  plugins: [react(), dts({ exclude: ['**/__tests__/**/*', 'src/App.tsx', 'src/main.tsx']})],
+  plugins: [react(), dts({ exclude: ['**/__tests__/**/*', 'src/test/*', 'src/App.tsx', 'src/main.tsx']})],
   test: {
     globals: true,
     environment: 'jsdom',
