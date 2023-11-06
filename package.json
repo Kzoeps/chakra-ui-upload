@@ -13,7 +13,7 @@
     "url": "github:Kzoeps/chakra-ui-upload"
   },
   "private": false,
-  "version": "0.0.14",
+  "version": "0.0.15",
   "type": "module",
   "types": "dist/interface.d.ts",
   "main": "dist/ChakraUpload.js",
