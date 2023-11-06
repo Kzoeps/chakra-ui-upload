@@ -14,6 +14,7 @@ export interface UploadProps {
   showUploadList?: boolean;
   onFileRemove?: FileRemoveFunction;
   style?: CSSProperties;
+  onFilesChange?: (files: CuiFile[]) => void;
 }
 
 export type FileRemoveFunction = (file: CuiFile, e?: MouseEvent) => void;
