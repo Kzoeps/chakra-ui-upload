@@ -29,19 +29,15 @@ function Upload(props: UploadProps,) {
         files = files.filter(file => attrAccept(file, accept))
         if (!multiple) {
             files = files.slice(0, 1)
+            if (beforeUpload(files[0]) === false) return;
             setFileList(mapIds(files))
         } else {
-            handleFileSet(files)
+            files.forEach(file => {
+                if (beforeUpload(file) === false) return;
+                handleFileSet([file])
+            })
         }
         onFileDrop?.(e)
-        uploadFiles(files)
-    }
-
-    // for now constraining it to manual upload if i ever need an automatic download will add it later
-    const uploadFiles = (files: File[]) => {
-        files.forEach(file => {
-            beforeUpload?.(file)
-        })
     }
 
     const handleFileDrag = (e: DragEvent<HTMLDivElement>) => {
@@ -63,8 +59,10 @@ function Upload(props: UploadProps,) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
         const acceptedFiles = [...(files || [])].filter(file => attrAccept(file, accept))
-        handleFileSet(acceptedFiles)
-        uploadFiles(acceptedFiles)
+        acceptedFiles.forEach(file => {
+            if (beforeUpload(file) === false) return;
+            handleFileSet([file])
+        })
     }
 
     const handleRemove: FileRemoveFunction = (file, e?): void => {

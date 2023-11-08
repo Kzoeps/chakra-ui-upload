@@ -1,6 +1,7 @@
 import { screen, fireEvent, render } from "./test-utils";
 import Upload from "../upload";
 import userEvent from '@testing-library/user-event'
+import { CuiFile } from "..";
 
 const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 test('should render upload ui', async () => {
@@ -137,4 +138,20 @@ test('should not render file list if show is false', async () => {
     expect(screen.queryAllByRole('listitem')).toHaveLength(0)
     expect(input.files).toHaveLength(1)
     expect(input.files?.[0]).toBe(file)
+})
+
+test('should not upload file if beforeUpload returns false', async () => {
+    const user = userEvent.setup()
+    const files = [file, new File(['hello'], 'hello2.png', { type: 'image/png' })]
+    const beforeUpload = (file: File) => {
+        if (file.name === 'hello.png') return false
+    }
+    render(
+        <>
+            <Upload multiple beforeUpload={beforeUpload}>Click to upload</Upload>
+        </>
+    )
+    const input: HTMLInputElement = screen.getByTestId('file-upload-input')
+    await user.upload(input, files)
+    expect(screen.queryAllByRole('listitem')).toHaveLength(1)
 })

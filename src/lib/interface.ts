@@ -9,7 +9,7 @@ export interface UploadProps {
   accept?: string | string[];
   onClick?: (e: MouseEvent<HTMLDivElement>) => void;
   onDrop?: (e: DragEvent<HTMLDivElement>) => void;
-  beforeUpload: (file: File) => void;
+  beforeUpload: (file: File) => void | undefined | null | boolean;
   children: React.ReactNode;
   showUploadList?: boolean;
   onFileRemove?: FileRemoveFunction;
