@@ -32,10 +32,8 @@ function Upload(props: UploadProps,) {
             if (beforeUpload(files[0]) === false) return;
             setFileList(mapIds(files))
         } else {
-            files.forEach(file => {
-                if (beforeUpload(file) === false) return;
-                handleFileSet([file])
-            })
+            files = files.filter(file => beforeUpload(file) !== false)
+            handleFileSet(files)
         }
         onFileDrop?.(e)
     }
@@ -45,7 +43,6 @@ function Upload(props: UploadProps,) {
         const type = e.type
         setDragState(type)
         if (type === 'drop') {
-            console.log(e.dataTransfer.items)
             onDrop(e)
         }
     }
@@ -58,11 +55,9 @@ function Upload(props: UploadProps,) {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
-        const acceptedFiles = [...(files || [])].filter(file => attrAccept(file, accept))
-        acceptedFiles.forEach(file => {
-            if (beforeUpload(file) === false) return;
-            handleFileSet([file])
-        })
+        let acceptedFiles = [...(files || [])].filter(file => attrAccept(file, accept))
+        acceptedFiles = acceptedFiles.filter(file => beforeUpload(file) !== false)
+        handleFileSet(acceptedFiles)
     }
 
     const handleRemove: FileRemoveFunction = (file, e?): void => {
