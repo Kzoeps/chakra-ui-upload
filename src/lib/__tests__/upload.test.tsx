@@ -5,9 +5,7 @@ import { fireEvent, render, screen } from "./test-utils";
 const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 test('should render upload ui', async () => {
     render(<>
-        <Upload beforeUpload={function (file: File): void {
-            console.log(file)
-        }}><p>Click to Upload</p></Upload>
+        <Upload beforeUpload={() => undefined}><p>Click to Upload</p></Upload>
     </>)
     expect(screen.getByText('Click to Upload')).toBeInTheDocument()
     // expect(screen.getByRole('paragraph', {description: 'Click to Upload'})).toBeInTheDocument()
@@ -15,7 +13,7 @@ test('should render upload ui', async () => {
 
 test('accepts file upload on click', async () => {
     render(<>
-        <Upload beforeUpload={function (file: File): void { console.log(file) }} multiple={true} >
+        <Upload beforeUpload={() => undefined} multiple={true} >
             Click to upload
         </Upload>
     </>)
@@ -29,7 +27,7 @@ test('accepts file upload on click', async () => {
 test('should accept file upload', async () => {
     const user = userEvent.setup()
     render(<>
-        <Upload beforeUpload={function (file: File): void { console.log(file) }} multiple={true} >
+        <Upload beforeUpload={() => undefined} multiple={true} >
             Click to upload
         </Upload>
     </>)
@@ -43,9 +41,7 @@ test('renders uploaded file list', async () => {
     const user = userEvent.setup()
     render(
         <>
-            <Upload beforeUpload={function (file: File): void {
-                console.log(file)
-            }} multiple >Click to upload</Upload>
+            <Upload beforeUpload={() => undefined} multiple >Click to upload</Upload>
         </>
     )
     const input: HTMLInputElement = screen.getByTestId('file-upload-input')
@@ -56,7 +52,7 @@ test('renders uploaded file list', async () => {
 
 test('accepts file upload on drop', async () => {
     render(<>
-        <Upload beforeUpload={function (file: File): void { console.log(file) }} multiple={true} >
+        <Upload beforeUpload={() => undefined} multiple={true} >
             Click to upload
         </Upload>
     </>)
@@ -69,7 +65,7 @@ test('accepts file upload on drop', async () => {
 test('delete file from list on delete click', async () => {
     const user = userEvent.setup()
     render(<>
-        <Upload beforeUpload={function (file: File): void { console.log(file) }} multiple={true} >
+        <Upload beforeUpload={() => undefined} multiple={true} >
             Click to upload
         </Upload>
     </>)
@@ -85,7 +81,7 @@ test('should accept only one file if multiple is false', async () => {
     const user = userEvent.setup()
     const files = [file, new File(['hello'], 'hello2.png', { type: 'image/png' })]
     render(<>
-        <Upload beforeUpload={function (file: File): void { console.log(file) }} multiple={false} >Click to upload</Upload>
+        <Upload beforeUpload={() => undefined} multiple={false} >Click to upload</Upload>
     </>)
     const input: HTMLInputElement = screen.getByTestId('file-upload-input')
     await user.upload(input, files)
