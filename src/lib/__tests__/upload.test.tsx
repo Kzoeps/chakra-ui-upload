@@ -1,7 +1,6 @@
-import { screen, fireEvent, render } from "./test-utils";
+import userEvent from '@testing-library/user-event';
 import Upload from "../upload";
-import userEvent from '@testing-library/user-event'
-import { CuiFile } from "..";
+import { fireEvent, render, screen } from "./test-utils";
 
 const file = new File(['hello'], 'hello.png', { type: 'image/png' });
 test('should render upload ui', async () => {

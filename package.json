@@ -30,7 +30,7 @@
   ],
   "scripts": {
     "dev": "vite --port 3000",
-    "build": "pnpm test && tsc && vite build",
+    "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "prepublish": "pnpm build",
